@@ -48,7 +48,7 @@ class TweetController extends Controller
      */
     public function edit(tweet $tweet)
     {
-        //
+        return view('tweets.edit', compact('tweet'));
     }
 
     /**
