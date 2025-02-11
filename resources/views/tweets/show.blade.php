@@ -44,8 +44,32 @@
                             </form>
                         </div>
                     @endif
+                    <!-- いいね機能の表示 -->
+                    <div class="flex mt-4">
+                        <!-- 既にいいねしている場合 -->
+                        @if ($tweet->liked->contains(auth()->id()))
+                            <!-- いいね解除フォーム -->
+                            <form action="{{ route('tweets.dislike', $tweet) }}" method="POST">
+                                @csrf <!-- CSRFトークンを含める -->
+                                @method('DELETE') <!-- DELETEメソッドを使用 -->
+                                <!-- いいね解除ボタン -->
+                                <button type="submit" class="text-red-500 hover:text-red-700">dislike
+                                    {{ $tweet->liked->count() }}</button>
+                            </form>
+                        @else
+                            <!-- いいねフォーム -->
+                            <form action="{{ route('tweets.like', $tweet) }}" method="POST">
+                                @csrf <!-- CSRFトークンを含める -->
+                                <!-- いいねボタン -->
+                                <button type="submit" class="text-blue-500 hover:text-blue-700">like
+                                    {{ $tweet->liked->count() }}</button>
+                            </form>
+                        @endif
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+    

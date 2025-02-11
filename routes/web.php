@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     // ツイートにいいねをするためのルーティング
     Route::post('/tweets/{tweet}/like', [TweetLikeController::class, 'store'])->name('tweets.like');
     // ツイートのいいねを解除するためのルーティング
-    Route::delete('/tweets/{tweet}/like', [TweetLikeController::class, 'destroy'])->name('tweets.like');
+    Route::delete('/tweets/{tweet}/like', [TweetLikeController::class, 'destroy'])->name('tweets.dislike');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
