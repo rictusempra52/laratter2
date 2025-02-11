@@ -28,11 +28,17 @@ class TweetController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新しいリソースをストレージに保存する。
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tweet' => 'required|max:255',
+        ]);
+
+        $request->user()->tweets()->create($request->only('tweet'));
+
+        return redirect()->route('tweets.index');
     }
 
     /**
@@ -64,6 +70,7 @@ class TweetController extends Controller
      */
     public function destroy(tweet $tweet)
     {
-        //
+        $tweet->delete();
+        return redirect()->route('tweets.index');
     }
 }
