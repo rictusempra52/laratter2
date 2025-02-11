@@ -47,6 +47,7 @@ class TweetController extends Controller
     public function show(tweet $tweet)
     {
         //
+        return view('tweets.show', compact('tweet'));
     }
 
     /**
@@ -60,9 +61,15 @@ class TweetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, tweet $tweet)
+    public function update(Request $request, tweet $tweet)z
     {
-        //
+        $request->validate([
+            'tweet' => 'required|max:255',
+        ]);
+
+        $tweet->update($request->only('tweet'));
+
+        return redirect()->route('tweets.show', $tweet);
     }
 
     /**

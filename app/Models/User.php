@@ -14,7 +14,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var list<string>
      */
     protected $fillable = [
@@ -44,6 +43,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // ユーザーがいいねしたツイートを取得するメソッド
+    // このメソッドは、ユーザーがいいねした複数のツイートを取得します。
+    public function likes()
+    {
+        return $this->belongsToMany(tweet::class)->withTimestamps();
     }
 
     /**

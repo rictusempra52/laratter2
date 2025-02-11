@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TweetController;
+use App\Http\Controllers\TweetLikeController;
 use Illuminate\Support\Facades\Route;
 
 // トップページを表示するためのルーティング
@@ -24,6 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // ツイートのCRUD操作を行うためのルーティング
     Route::resource('tweets', TweetController::class);
+    // ツイートにいいねをするためのルーティング
+    Route::post('/tweets/{tweet}/like', [TweetLikeController::class, 'store'])->name('tweets.like');
+    // ツイートのいいねを解除するためのルーティング
+    Route::delete('/tweets/{tweet}/like', [TweetLikeController::class, 'destroy'])->name('tweets.like');
 });
 
 require __DIR__.'/auth.php';
