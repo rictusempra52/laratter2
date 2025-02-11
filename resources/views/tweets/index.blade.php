@@ -17,6 +17,28 @@
                             <p class="text-gray-600 dark:text-gray-400 text-sm">投稿者: {{ $tweet->user->name }}</p>
                             <a href="{{ route('tweets.show', $tweet) }}"
                                 class="text-blue-500 hover:text-blue-700">詳細を見る</a>
+                            {{-- いいね機能の実装 --}}
+                            <div class="flex">
+                                {{-- もしユーザーがこのツイートにいいねしている場合 --}}
+                                @if ($tweet->liked->contains(auth()->id()))
+                                    {{-- いいねを取り消すフォーム --}}
+                                    <form action="{{ route('tweets.dislike', $tweet) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700">dislike
+                                            {{-- いいねの数を表示 --}}
+                                            {{ $tweet->liked->count() }}</button>
+                                    </form>
+                                @else
+                                    {{-- いいねをするフォーム --}}
+                                    <form action="{{ route('tweets.like', $tweet) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="text-blue-500 hover:text-blue-700">like
+                                            {{-- いいねの数を表示 --}}
+                                            {{ $tweet->liked->count() }}</button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>

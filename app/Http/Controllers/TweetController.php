@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 class TweetController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * ツイートの一覧を表示する
      */
     public function index()
     {
         //Tweet の全件を新しい順に取得する
         $tweets = tweet::with('user')->latest()->get();
+
+        // いいね数を取得する
+        $tweets = tweet::with(['user', 'liked'])->latest()->get();
         // ツイート一覧ビューを表示する
         return view('tweets.index', compact('tweets'));
     }
@@ -61,7 +64,7 @@ class TweetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, tweet $tweet)z
+    public function update(Request $request, tweet $tweet)
     {
         $request->validate([
             'tweet' => 'required|max:255',

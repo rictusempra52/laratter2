@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\tweet;
 
 class TweetLikeController extends Controller
 {
@@ -25,9 +26,10 @@ class TweetLikeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(tweet $tweet)
     {
-        //
+        $tweet->liked()->attach(auth()->id());
+        return back();
     }
 
     /**
@@ -57,8 +59,9 @@ class TweetLikeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(tweet $tweet)
     {
-        //
+        $tweet->liked()->detach(auth()->id());
+        return back();
     }
 }
